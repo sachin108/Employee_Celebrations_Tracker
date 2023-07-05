@@ -1,36 +1,33 @@
-from datetime import date, timedelta
-from employee_data_service.models import Employee
+import datetime
+import pandas as pd
 
-
-def calculate_upcoming_events(date_range):
-    employees = Employee.objects.all()
-    today = date.today()
-    end_date = today + timedelta(days=date_range)
-
+def calculate_upcoming_events(employee_data, end_date):
     upcoming_birthdays = []
-    upcoming_anniversaries = []
+    upcoming_work_anniversaries = []
 
-    for employee in employees:
-        # Calculate the upcoming birthday for each employee
+    for employee in employee_data:
+        # Calculate days remaining for the upcoming birthday
         birthdate = employee.birthdate
-        upcoming_birthday = date(today.year, birthdate.month, birthdate.day)
+        days_until_birthday = (birthdate - end_date).days
 
-        if upcoming_birthday < today:
-            upcoming_birthday = date(today.year + 1, birthdate.month, birthdate.day)
+        if 0 <= days_until_birthday <= 30:
+            upcoming_birthdays.append({
+                'name': employee.name,
+                'birthdate': birthdate,
+                'email': employee.email,
+                'days_remaining': days_until_birthday
+            })
 
-        if today <= upcoming_birthday <= end_date:
-            days_until_birthday = (upcoming_birthday - today).days
-            upcoming_birthdays.append({'employee': employee, 'days_until': days_until_birthday})
-            
-        # Calculate the upcoming work anniversary for each employee
+        # Calculate days remaining for the upcoming work anniversary
         hire_date = employee.hire_date
-        upcoming_anniversary = date(today.year, hire_date.month, hire_date.day)
+        days_until_anniversary = (hire_date - end_date).days
 
-        if upcoming_anniversary < today:
-            upcoming_anniversary = date(today.year + 1, hire_date.month, hire_date.day)
+        if 0 <= days_until_anniversary <= 30:
+            upcoming_work_anniversaries.append({
+                'name': employee.name,
+                'hire_date': hire_date,
+                'email': employee.email,
+                'days_remaining': days_until_anniversary
+            })
 
-        if today <= upcoming_anniversary <= end_date:
-            days_until_anniversary = (upcoming_anniversary - today).days
-            upcoming_anniversaries.append({'employee': employee, 'days_until': days_until_anniversary})
-
-    return upcoming_birthdays, upcoming_anniversaries
+    return upcoming_birthdays, upcoming_work_anniversaries

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Result</title>
+    <title>Employee Data</title>
 </head>
 <body>
-    <h1>Uploaded Employee Data</h1>
+    <h1>Employee Data</h1>
     <table>
         <thead>
             <tr>
@@ -16,12 +16,12 @@
         </thead>
         <tbody>
             {% for employee in employee_data %}
-            <tr>
-                <td>{{ employee.name }}</td>
-                <td>{{ employee.birthdate }}</td>
-                <td>{{ employee.hire_date }}</td>
-                <td>{{ employee.email }}</td>
-            </tr>
+                <tr>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.birthdate }}</td>
+                    <td>{{ employee.hire_date }}</td>
+                    <td>{{ employee.email }}</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>

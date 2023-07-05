@@ -4,32 +4,23 @@
     <title>Upcoming Events</title>
 </head>
 <body>
-    <h1>Upcoming Birthdays</h1>
-    {% if upcoming_birthdays %}
-        <ul>
-            {% for event in upcoming_birthdays %}
-                <li>
-                    Employee: {{ event.employee.name }} <br>
-                    Days Until Birthday: {{ event.days_until }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No upcoming birthdays.</p>
-    {% endif %}
-
-    <h1>Upcoming Work Anniversaries</h1>
-    {% if upcoming_anniversaries %}
-        <ul>
-            {% for event in upcoming_anniversaries %}
-                <li>
-                    Employee: {{ event.employee.name }} <br>
-                    Days Until Work Anniversary: {{ event.days_until }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No upcoming work anniversaries.</p>
-    {% endif %}
+    <h1>Upcoming Events</h1>
+    <h2>Birthdays</h2>
+    <ul>
+        {% for employee in upcoming_birthdays %}
+            <li>{{ employee.name }} - {{ employee.birthdate }}</li>
+        {% empty %}
+            <li>No upcoming birthdays.</li>
+        {% endfor %}
+    </ul>
+    <h2>Work Anniversaries</h2>
+    <ul>
+        {% for employee in upcoming_work_anniversaries %}
+            <li>{{ employee.name }} - {{ employee.hire_date }}</li>
+        {% empty %}
+            <li>No upcoming work anniversaries.</li>
+        {% endfor %}
+    </ul>
+    <p><a href="{% url 'upcoming_events' date_range %}">Refresh</a></p>
 </body>
 </html>
