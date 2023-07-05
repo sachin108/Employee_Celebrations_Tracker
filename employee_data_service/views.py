@@ -24,7 +24,6 @@ def upload_file(request):
 
                 # Create Employee objects or perform any desired operations with the extracted data
                 employee = Employee(name=name, birthdate=birthdate, hire_date=hire_date, email=email)
-                employee.save()
 
                 # Append the extracted data to a list
                 employee_data.append(employee)
@@ -41,12 +40,9 @@ def show_employee_data(request):
     return render(request, 'employee_data.html', {'employee_data': employee_data})
 
 def upcoming_events(request, days):
-    today = date.today()
-    end_date = today + timedelta(days=int(days))
-
     # Retrieve the employee data from the database
     employee_data = Employee.objects.all()
 
-    upcoming_birthdays, upcoming_work_anniversaries = calculate_upcoming_events(employee_data, end_date)
-
+    upcoming_birthdays, upcoming_work_anniversaries = calculate_upcoming_events(employee_data, days)
+    print(upcoming_birthdays)
     return render(request, 'upcoming-events.html', {'upcoming_birthdays': upcoming_birthdays, 'upcoming_work_anniversaries': upcoming_work_anniversaries})
