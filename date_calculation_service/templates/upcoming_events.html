@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upcoming Events</title>
+</head>
+<body>
+    <h1>Upcoming Birthdays</h1>
+    {% if upcoming_birthdays %}
+        <ul>
+            {% for event in upcoming_birthdays %}
+                <li>
+                    Employee: {{ event.employee.name }} <br>
+                    Days Until Birthday: {{ event.days_until }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No upcoming birthdays.</p>
+    {% endif %}
+
+    <h1>Upcoming Work Anniversaries</h1>
+    {% if upcoming_anniversaries %}
+        <ul>
+            {% for event in upcoming_anniversaries %}
+                <li>
+                    Employee: {{ event.employee.name }} <br>
+                    Days Until Work Anniversary: {{ event.days_until }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No upcoming work anniversaries.</p>
+    {% endif %}
+</body>
+</html>

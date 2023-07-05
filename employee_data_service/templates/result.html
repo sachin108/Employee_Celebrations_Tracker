@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+</head>
+<body>
+    <h1>Uploaded Employee Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Birthdate</th>
+                <th>Hire Date</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employee_data %}
+            <tr>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.birthdate }}</td>
+                <td>{{ employee.hire_date }}</td>
+                <td>{{ employee.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

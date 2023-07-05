@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from employee_data_service.views import upload_file
+from date_calculation_service.views import upcoming_events
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('upload/', upload_file, name='upload'),
+    path('upcoming-events/<int:date_range>/', upcoming_events, name='upcoming_events'),
 ]
+
