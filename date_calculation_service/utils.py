@@ -1,5 +1,4 @@
-import datetime
-import pandas as pd
+from datetime import datetime, timedelta
 
 def calculate_upcoming_events(employee_data, end_date):
     upcoming_birthdays = []
@@ -8,8 +7,15 @@ def calculate_upcoming_events(employee_data, end_date):
     for employee in employee_data:
         # Calculate days remaining for the upcoming birthday
         birthdate = employee.birthdate
-        days_until_birthday = (birthdate - end_date).days
 
+        # Adjust the birthdate to the next year if it has already passed for this year
+        if birthdate < end_date:
+            birthdate = birthdate.replace(year=end_date.year + 1)
+
+        #days_until_birthday = ((birthdate - end_date).days) 
+
+        days_until_birthday = ((birthdate - end_date).days)-365 
+        print(days_until_birthday)
         if 0 <= days_until_birthday <= 30:
             upcoming_birthdays.append({
                 'name': employee.name,
