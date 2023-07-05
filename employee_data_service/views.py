@@ -1,5 +1,6 @@
 import pandas as pd
 from django.shortcuts import render
+from employee_data_service.models import Employee
 
 def upload_file(request):
     if request.method == 'POST':
@@ -8,7 +9,8 @@ def upload_file(request):
         # Check if the uploaded file is an Excel file
         if file.name.endswith('.xls') or file.name.endswith('.xlsx'):
             # Read the Excel file using pandas
-            df = pd.read_excel(file, header=0)
+            df = pd.read_excel(file)
+
             # Extract data from the Excel sheet
             employee_data = []
             for _, row in df.iterrows():
@@ -17,8 +19,9 @@ def upload_file(request):
                 hire_date = row['Joining_Date']
                 email = row['Email_ID']
 
-                # Create Employee objects or perform any desired operations with the extracted data
-                # For example, you can save the employee data to the database
+                # Create Employee objects from employee_data_service
+                employee = Employee(name=name, birthdate=birthdate, hire_date=hire_date, email=email)
+                employee.save()
 
                 # Append the extracted data to a list
                 employee_data.append({'name': name, 'birthdate': birthdate, 'hire_date': hire_date, 'email': email})
