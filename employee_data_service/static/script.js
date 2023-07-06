@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch upcoming events data from the API endpoint
-    fetch('http://localhost:8000/api/upcoming-events/30/')
+    fetch('/api/upcoming-events/30')
       .then(response => response.json())
       .then(data => {
         // Extract upcoming birthdays and work anniversaries from the API response
