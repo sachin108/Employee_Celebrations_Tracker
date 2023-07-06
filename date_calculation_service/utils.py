@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-def calculate_upcoming_events(employee_data, days):
+def calculate_upcoming_events(employee_data, daysX):
     upcoming_birthdays = []
     upcoming_work_anniversaries = []
 
@@ -26,7 +26,7 @@ def calculate_upcoming_events(employee_data, days):
 
                 days_until_birthday = ((birthdate - end_date).days)-365 
         '''        
-        if 0 <= remaining_days <= 30:
+        if 0 <= remaining_days <= daysX:
             upcoming_birthdays.append({
                 'name': employee.name,
                 'birthdate': birthdate,
@@ -40,7 +40,7 @@ def calculate_upcoming_events(employee_data, days):
         next_annie = datetime(today.year, hire_date.month, hire_date.day)
         remaining_days_annie = (next_annie - today).days
 
-        if 0 <= remaining_days_annie <= 30:
+        if 0 <= remaining_days_annie <= daysX:
             upcoming_work_anniversaries.append({
                 'name': employee.name,
                 'hire_date': hire_date,

@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upcoming Events</title>
+  <style>
+    /* Add your CSS styling here */
+  </style>
+</head>
+<body>
+  <h1>Upcoming Events</h1>
+
+  <div id="birthdays-container">
+    <h2>Upcoming Birthdays</h2>
+    <ul id="birthdays-list"></ul>
+  </div>
+
+  <div id="work-anniversaries-container">
+    <h2>Upcoming Work Anniversaries</h2>
+    <ul id="work-anniversaries-list"></ul>
+  </div>
+
+  <script src="{% static 'employee_data_service/script.js' %}"></script></body>
+</html>
