@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import date, timedelta
 
 from employee_data_service.models import Employee
-from date_calculation_service.utils import calculate_upcoming_events
+from .utils import calculate_upcoming_events
 
 def upload_file(request):
     if request.method == 'POST':

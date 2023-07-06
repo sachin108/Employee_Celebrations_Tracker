@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from date_calculation_service.utils import calculate_upcoming_events
+from .utils import calculate_upcoming_events
 from .models import Employee
 
 def upcoming_events_api(request, days):

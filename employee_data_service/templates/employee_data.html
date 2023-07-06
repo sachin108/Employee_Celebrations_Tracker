@@ -1,29 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Employee Data</title>
+  <title>Employee Data</title>
+  <style>
+    body {
+      background-color: #f1f5f8;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #2196f3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #2196f3;
+      color: #fff;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <h1>Employee Data</h1>
     <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Birthdate</th>
-                <th>Hire Date</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for employee in employee_data %}
-                <tr>
-                    <td>{{ employee.name }}</td>
-                    <td>{{ employee.birthdate }}</td>
-                    <td>{{ employee.hire_date }}</td>
-                    <td>{{ employee.email }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Birthdate</th>
+          <th>Joining Date</th>
+          <th>Email ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in employee_data %}
+        <tr>
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.birthdate }}</td>
+          <td>{{ employee.hire_date }}</td>
+          <td>{{ employee.email }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
+  </div>
 </body>
 </html>

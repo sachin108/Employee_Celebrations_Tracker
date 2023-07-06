@@ -4,12 +4,12 @@ def calculate_upcoming_events(employee_data, daysX):
     upcoming_birthdays = []
     upcoming_work_anniversaries = []
 
-    for employee in employee_data:
+    today = datetime.today()
 
+    for employee in employee_data:
         # Calculate days remaining for the upcoming birthday
         birthdate = employee.birthdate
 
-        today = datetime.today()
         next_birthday = datetime(today.year, birthdate.month, birthdate.day)
 
         if next_birthday < today:
@@ -17,15 +17,14 @@ def calculate_upcoming_events(employee_data, daysX):
 
         remaining_days = (next_birthday - today).days
 
-        '''
-                # Adjust the birthdate to the next year if it has already passed for this year
-                if birthdate < end_date:
-                    birthdate = birthdate.replace(year=end_date.year + 1)
+        if remaining_days == 365:
+            upcoming_birthdays.append({
+                'name': employee.name,
+                'birthdate': birthdate,
+                'email': employee.email,
+                'days_remaining': 0
+            })
 
-                #days_until_birthday = ((birthdate - end_date).days) 
-
-                days_until_birthday = ((birthdate - end_date).days)-365 
-        '''        
         if 0 <= remaining_days <= daysX:
             upcoming_birthdays.append({
                 'name': employee.name,
@@ -37,15 +36,30 @@ def calculate_upcoming_events(employee_data, daysX):
         # Calculate days remaining for the upcoming work anniversary
         hire_date = employee.hire_date
 
-        next_annie = datetime(today.year, hire_date.month, hire_date.day)
-        remaining_days_annie = (next_annie - today).days
+        next_anniversary = datetime(today.year, hire_date.month, hire_date.day)
 
-        if 0 <= remaining_days_annie <= daysX:
+        if next_anniversary < today:
+            next_anniversary = datetime(today.year + 1, hire_date.month, hire_date.day)
+
+
+        remaining_days_anniversary = (next_anniversary - today).days
+
+        print(employee.name, remaining_days_anniversary)
+        if remaining_days_anniversary == 365:
             upcoming_work_anniversaries.append({
                 'name': employee.name,
                 'hire_date': hire_date,
                 'email': employee.email,
-                'days_remaining': remaining_days_annie
+                'days_remaining': 0
+            })
+
+
+        if 0 <= remaining_days_anniversary <= daysX:
+            upcoming_work_anniversaries.append({
+                'name': employee.name,
+                'hire_date': hire_date,
+                'email': employee.email,
+                'days_remaining': remaining_days_anniversary
             })
 
     return upcoming_birthdays, upcoming_work_anniversaries
