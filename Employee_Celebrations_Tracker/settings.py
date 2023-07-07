@@ -80,10 +80,15 @@ WSGI_APPLICATION = 'Employee_Celebrations_Tracker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql', # or 'django.db.backends.mysql' for MySQL
+        'NAME': 'spring',
+        'USER': 'admin',
+        'PASSWORD': 'helloSQL',
+        'HOST': 'database-1.cvce9lgjvvx0.us-west-2.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
+
 
 
 
