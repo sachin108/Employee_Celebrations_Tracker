@@ -2,7 +2,7 @@ from django.shortcuts import render
 import pandas as pd
 from datetime import date, timedelta
 
-from employee_data_service.models import Employee
+from .models import Employee
 from .utils import calculate_upcoming_events
 
 def upload_file(request):
@@ -15,7 +15,6 @@ def upload_file(request):
             df = pd.read_excel(file)
 
             # Extract data from the Excel sheet
-            employee_data = []
             for _, row in df.iterrows():
                 name = row['Name']
                 birthdate = row['Birth_Date']
@@ -25,11 +24,8 @@ def upload_file(request):
                 # Create Employee objects or perform any desired operations with the extracted data
                 employee = Employee(name=name, birthdate=birthdate, hire_date=hire_date, email=email)
                 employee.save()
-                # Append the extracted data to a list
-                employee_data.append(employee)
 
-            # Pass the extracted data to the template or perform any desired further actions
-            return render(request, 'employee_data.html', {'employee_data': employee_data})
+            return render(request, 'employee_data.html')
         else:
             return render(request, 'upload.html', {'error_message': 'Please upload a valid Excel file.'})
     else:
