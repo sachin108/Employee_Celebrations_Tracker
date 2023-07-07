@@ -25,7 +25,7 @@ def upload_file(request):
                 employee = Employee(name=name, birthdate=birthdate, hire_date=hire_date, email=email)
                 employee.save()
 
-            return render(request, 'employee_data.html')
+            return render(request, 'employee_data.html', {'employee_data': Employee.objects.all()})
         else:
             return render(request, 'upload.html', {'error_message': 'Please upload a valid Excel file.'})
     else:
