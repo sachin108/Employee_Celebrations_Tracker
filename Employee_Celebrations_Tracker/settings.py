@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'spring',
         'USER': 'admin',
         'PASSWORD': 'helloSQL',
-        'HOST': 'database-1.cvce9lgjvvx0.us-west-2.rds.amazonaws.com',
+        'HOST': 'springdbi.cvce9lgjvvx0.us-west-2.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
