@@ -1,14 +1,16 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 import pandas as pd
 from datetime import date, timedelta
-
 from .models import Employee
 from .utils import calculate_upcoming_events
 
+date_format = "%m/%d/%Y"  # Assuming the date format in the Excel sheet is MM/DD/YYYY
+
 @login_required(login_url='login')
+@user_passes_test(lambda u: u.is_superuser)
 def upload_file(request):
     if request.method == 'POST':
         file = request.FILES['file']  # Assuming the file input field has the name 'file'
@@ -20,13 +22,18 @@ def upload_file(request):
 
             # Extract data from the Excel sheet
             for _, row in df.iterrows():
-                name = row['Name']
-                birthdate = row['Birth_Date']
-                hire_date = row['Joining_Date']
-                email = row['Email_ID']
+                eId=row['Employee_ID']
+                name = row['Employee Name']
+                email = row['Employee Email']
+                dob=row['Date of Birth']
+                dob=pd.to_datetime(dob, format=date_format)                
+                doj = row['Date of Joining']
+                doj=pd.to_datetime(doj, format=date_format)               
+                fc=row['favourite Colour']
+                fp=row['Place of interest']
 
                 # Create Employee objects or perform any desired operations with the extracted data
-                employee = Employee(name=name, birthdate=birthdate, hire_date=hire_date, email=email)
+                employee = Employee(eId=eId, name=name, dob=dob, doj=doj, email=email,fc=fc, fp=fp )
                 employee.save()
 
             return render(request, 'employee_data.html', {'employee_data': Employee.objects.all()})
@@ -35,17 +42,19 @@ def upload_file(request):
     else:
         return render(request, 'upload.html')
 
+
 @login_required(login_url='login')
+@user_passes_test(lambda u: u.is_superuser)
 def show_employee_data(request):
     employee_data = Employee.objects.all()
     return render(request, 'employee_data.html', {'employee_data': employee_data})
 
 @login_required(login_url='login')
-def upcoming_events(request, days):
+def upcoming_events(request):
     # Retrieve the employee data from the database
     employee_data = Employee.objects.all()
 
-    upcoming_birthdays, upcoming_work_anniversaries = calculate_upcoming_events(employee_data, days)
+    upcoming_birthdays, upcoming_work_anniversaries = calculate_upcoming_events(employee_data)
     return render(request, 'upcoming-events.html', {'upcoming_birthdays': upcoming_birthdays, 'upcoming_work_anniversaries': upcoming_work_anniversaries})
 
 def login_view(request):
@@ -55,10 +64,10 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('upcoming_events', 30)  # Redirect to the upcoming events page for the next 30 days
-        else:
-            # Handle login failure (e.g., display an error message)
-            return render(request, 'login.html', {'error_message': 'Invalid username or password'})
+            if request.user.is_superuser:
+                return render(request, 'adminX.html')
+            else:
+                return redirect('upcoming_events') 
     else:
         return render(request, 'login.html')
 
@@ -77,3 +86,4 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')  # Redirect to the login page after logout
+

@@ -4,14 +4,15 @@
     <title>Upcoming Events</title>
     <style>
         body {
-            background: linear-gradient(to bottom, #e6f7ff, #f1f5f8);
+            /* ... */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
+            color: #333; /* Change the font color */
         }
 
         .container {
-            max-width: 800px;
+            /* ... */
             margin: 0 auto;
             background: linear-gradient(to bottom, #ffffff, #f9f9f9);
             border-radius: 5px;
@@ -20,58 +21,70 @@
         }
 
         h1 {
+            /* ... */
             text-align: center;
             color: #2196f3;
             margin-bottom: 20px;
+            font-size: 32px; /* Increase the font size */
         }
 
-        .event-container {
-            margin-bottom: 20px;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
+        h2 {
+            /* ... */
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px; /* Increase the font size */
         }
 
         li {
+            /* ... */
             background: linear-gradient(to bottom, #ffffff, #f9f9f9);
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 20px; /* Increase the padding */
+            margin-bottom: 20px;
             border-radius: 5px;
-        }
-
-        .event-details span {
-            font-weight: bold;
-            color: #2196f3;
-        }
-
-        .no-events {
-            color: #777;
-            text-align: center;
-            font-size: 14px;
+            list-style-type: none;
         }
 
         .special-effect {
+            /* ... */
             animation: pulseEffect 2s infinite;
             background-color: #00DBDE;
             background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
             color: #ffffff;
+            font-weight: bold; /* Add font weight */
         }
 
-        @keyframes pulseEffect {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        .no-events {
+            /* ... */
+            color: #777;
+            text-align: center;
+            font-size: 18px; /* Increase the font size */
         }
+        .logout-link {
+            float: right;
+            color: #2196f3;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-right: 20px;
+            padding: 10px 20px;
+            border: 2px solid #2196f3;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-link:hover {
+            background-color: #2196f3;
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
     {% if user.is_authenticated %}
-    <a href="{% url 'logout' %}">Logout</a>
-  {% else %}
-    <a href="{% url 'login' %}">Login</a>
-  {% endif %}
+    <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="logout-link">Login</a>
+    {% endif %}
 <div class="container">
     <h1>Upcoming Events</h1>
     <div class="event-container">
@@ -81,7 +94,6 @@
                 {% for birthday in upcoming_birthdays %}
                     <li {% if birthday.days_remaining == 0 %}class="special-effect"{% endif %}>
                         <strong>{{ birthday.name }}</strong> (Email: {{ birthday.email }}) 🎂<br>
-                        Birthday: {{ birthday.birthdate }}<br>
                         Days Remaining: {{ birthday.days_remaining }} ❤️
                     </li>
                 {% endfor %}
@@ -98,8 +110,13 @@
                 {% for anniversary in upcoming_work_anniversaries %}
                     <li {% if anniversary.days_remaining == 0 %}class="special-effect"{% endif %}>
                         <strong>{{ anniversary.name }}</strong> (Email: {{ anniversary.email }}) 🎉<br>
-                        Joining Date: {{ anniversary.hire_date }}<br>
-                        Days Remaining: {{ anniversary.days_remaining }} 😀
+                        Joining Date: {{ anniversary.doj }}<br>
+                        Days Remaining: {{ anniversary.days_remaining }} 😀 <br>
+                        {% if anniversary.total_years == 1 %}                        
+                        {{anniversary.name}} has completed {{anniversary.total_years}} year in our organization. 
+                        {% else %}                        
+                        {{anniversary.name}} has completed {{anniversary.total_years}} years in our organization.
+                        {% endif %}                    
                     </li>
                 {% endfor %}
             </ul>
