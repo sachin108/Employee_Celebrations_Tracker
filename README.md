@@ -1,1 +1,1 @@
-An application that extracts data from an employee excel sheet , present upcoming birthdays and work anniversary.
+It is a web application that extracts data from an employee excel sheet , presents upcoming birthdays and work anniversaries.
