@@ -1,128 +1,260 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Upcoming Events</title>
-    <style>
-        body {
-            /* ... */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            color: #333; /* Change the font color */
-        }
+    <head>
+        <title>Upcoming Events</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+    
+            .container {
+                margin: 0 auto;
+                background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+    
+            h1 {
+                text-align: center;
+                color: #2196f3;
+                margin-bottom: 20px;
+                font-size: 32px;
+            }
+    
+            h2 {
+                color: #2196f3;
+                margin-bottom: 10px;
+                font-size: 24px;
+                text-align: center;
+                text-transform: uppercase;
+                margin-top: 30px;
+            }
+    
+            li {
+                background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+                padding: 10px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+                list-style-type: none;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+    
+            .special-effect {
+                animation: pulseEffect 2s infinite;
+                background-color: #00DBDE;
+                background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+                color: #ffffff;
+                font-weight: bold;
+            }
+    
+            .no-events {
+                color: #777;
+                text-align: center;
+                font-size: 18px;
+            }
+    
+            .logout-link {
+                float: right;
+                color: #2196f3;
+                text-decoration: none;
+                font-weight: bold;
+                margin-top: 20px;
+                margin-right: 20px;
+                padding: 10px 20px;
+                border: 2px solid #2196f3;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+    
+            .logout-link:hover {
+                background-color: #2196f3;
+                color: #fff;
+            }
+    
+            @keyframes pulseEffect {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.1);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+            .heart-icon {
+                color: #0e0b0c; /* Red color variant */
+            }
+    
+            .smiley-icon {
+                color: #ffea00; /* Yellow color variant */
+            }
+    
+            .completed-years {
+                font-weight: bold;
+                color: #f50057; /* Pink color variant */
+            }
+    
+            .food {
+                font-style: italic;
+                color: #51284b; /* Purple color variant */
+            }
+    
+            .event-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+            }
+    
+            .event-card {
+                background-color: #f9f9f9;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                transition: transform 0.3s;
+                min-width: 300px;
+                height: 50%;
+                padding: 30px;
+            }
+    
+            .event-card:hover {
+                transform: scale(1.05);
+            }
+    
+            .event-card__title {
+                font-size: 24px;
+                color: #1b0758; /* Blue color variant */
+                margin-bottom: 10px;
+            }
+    
+            .event-card__icon {
+                font-size: 30px;
+                margin-bottom: 10px;
+            }
+    
+            .event-card__description {
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+    
+            .event-card__extra-info {
+                font-size: 16px;
+                color: #080044;
+                margin-bottom: 5px;
+            }
+    
+            .birthday-card {
+                background: #acb6e5;  /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #86fde8, #acb6e5);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #86fde8, #acb6e5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            }
+    
+            .anniversary-card {
+                background: #2193b0;  /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #6dd5ed, #2193b0);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            }
+    
+            /* Updated styles for larger cards and hover effect */
+    
+            .event-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+    
+            .event-card:hover {
+                transform: scale(1.05);
+            }
+            h1 {
+                font-family: 'Roboto', sans-serif;
+                font-weight: bold;
+                font-size: 32px;
+            }
 
-        .container {
-            /* ... */
-            margin: 0 auto;
-            background: linear-gradient(to bottom, #ffffff, #f9f9f9);
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
+            h2 {
+                font-family: 'Open Sans', sans-serif;
+                font-weight: 600;
+                font-size: 24px;
+            }
 
-        h1 {
-            /* ... */
-            text-align: center;
-            color: #2196f3;
-            margin-bottom: 20px;
-            font-size: 32px; /* Increase the font size */
-        }
+            h3 {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 500;
+                font-size: 20px;
+            }
 
-        h2 {
-            /* ... */
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px; /* Increase the font size */
-        }
+            p, span {
+                font-family: 'Lato', sans-serif;
+                font-weight: normal;
+                font-size: 16px;
+            }
 
-        li {
-            /* ... */
-            background: linear-gradient(to bottom, #ffffff, #f9f9f9);
-            padding: 20px; /* Increase the padding */
-            margin-bottom: 20px;
-            border-radius: 5px;
-            list-style-type: none;
-        }
+            li {
+                font-family: 'Raleway', sans-serif;
+                font-weight: 500;
+                font-size: 18px;
+            }
 
-        .special-effect {
-            /* ... */
-            animation: pulseEffect 2s infinite;
-            background-color: #00DBDE;
-            background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
-            color: #ffffff;
-            font-weight: bold; /* Add font weight */
-        }
+            /* Add more CSS rules for other tags as needed */
 
-        .no-events {
-            /* ... */
-            color: #777;
-            text-align: center;
-            font-size: 18px; /* Increase the font size */
-        }
-        .logout-link {
-            float: right;
-            color: #2196f3;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            margin-right: 20px;
-            padding: 10px 20px;
-            border: 2px solid #2196f3;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .logout-link:hover {
-            background-color: #2196f3;
-            color: #fff;
-        }
-
-    </style>
-</head>
-<body>
-    {% if user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="logout-link">Logout</a>
-    {% else %}
-        <a href="{% url 'login' %}" class="logout-link">Login</a>
-    {% endif %}
-<div class="container">
-    <h1>Upcoming Events</h1>
-    <div class="event-container">
+        </style>
+    </head>
+    <body>
+        <!-- Existing HTML code -->
         <h2>Upcoming Birthdays</h2>
-        {% if upcoming_birthdays %}
-            <ul>
-                {% for birthday in upcoming_birthdays %}
-                    <li {% if birthday.days_remaining == 0 %}class="special-effect"{% endif %}>
-                        <strong>{{ birthday.name }}</strong> (Email: {{ birthday.email }}) 🎂<br>
-                        Days Remaining: {{ birthday.days_remaining }} ❤️
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="no-events">No upcoming birthdays. 😔</p>
-        {% endif %}
-    </div>
-
-    <div class="event-container">
+        <div class="event-container">
+            {% if upcoming_birthdays %}
+                <ul>
+                    {% for birthday in upcoming_birthdays %}
+                        <li {% if birthday.days_remaining == 0 %}class="special-effect"{% endif %}>
+                            <div class="event-card birthday-card">
+                                <h3 class="event-card__title">{{ birthday.name }}</h3>
+                                <span class="event-card__icon">🎂</span>
+                                <p class="event-card__description">Email: {{ birthday.email }}</p>
+                                <p class="event-card__extra-info"><span class="heart-icon">Days Remaining: {{ birthday.days_remaining }}</span> ❤️</p>
+                                <p class="event-card__extra-info">{{birthday.fc}} is {{birthday.name}}'s favourite color.</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-events">No upcoming birthdays. 😔</p>
+            {% endif %}
+        </div>
+    
         <h2>Upcoming Work Anniversaries</h2>
-        {% if upcoming_work_anniversaries %}
-            <ul>
-                {% for anniversary in upcoming_work_anniversaries %}
-                    <li {% if anniversary.days_remaining == 0 %}class="special-effect"{% endif %}>
-                        <strong>{{ anniversary.name }}</strong> (Email: {{ anniversary.email }}) 🎉<br>
-                        Joining Date: {{ anniversary.doj }}<br>
-                        Days Remaining: {{ anniversary.days_remaining }} 😀 <br>
-                        {% if anniversary.total_years == 1 %}                        
-                        {{anniversary.name}} has completed {{anniversary.total_years}} year in our organization. 
-                        {% else %}                        
-                        {{anniversary.name}} has completed {{anniversary.total_years}} years in our organization.
-                        {% endif %}                    
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="no-events">No upcoming work anniversaries. 😔</p>
-        {% endif %}
-</div>
-</body>
-</html>
+        <div class="event-container" >
+            {% if upcoming_work_anniversaries %}
+                <ul>
+                    {% for anniversary in upcoming_work_anniversaries %}
+                        <li {% if anniversary.days_remaining == 0 %}class="special-effect"{% endif %}>
+                            <div class="event-card anniversary-card">
+                                <h3 class="event-card__title">{{ anniversary.name }}</h3>
+                                <span class="event-card__icon">🎉</span>
+                                <p class="event-card__description">Email: {{ anniversary.email }}</p>
+                                <p class="event-card__extra-info">Joining Date: {{ anniversary.doj }}</p>
+                                <p class="event-card__extra-info"><span class="smiley-icon">Days Remaining: {{ anniversary.days_remaining }}</span> 😀</p>
+                                <p class="event-card__extra-info">{% if anniversary.total_years == 1 %}{{anniversary.name}} has completed {{anniversary.total_years}} year in our organization.{% else %}{{anniversary.name}} has completed {{anniversary.total_years}} years in our organization.{% endif %}</p>
+                                <p class="event-card__extra-info"><span class="food">{{anniversary.ff}} is {{anniversary.name}}'s favourite food.</span></p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-events">No upcoming work anniversaries. 😔</p>
+            {% endif %}
+        </div>
+    </body>
+    </html>

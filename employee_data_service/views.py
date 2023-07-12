@@ -31,9 +31,10 @@ def upload_file(request):
                 doj=pd.to_datetime(doj, format=date_format)               
                 fc=row['favourite Colour']
                 fp=row['Place of interest']
+                ff=row['favourite food']
 
                 # Create Employee objects or perform any desired operations with the extracted data
-                employee = Employee(eId=eId, name=name, dob=dob, doj=doj, email=email,fc=fc, fp=fp )
+                employee = Employee(eId=eId, name=name, dob=dob, doj=doj, email=email,fc=fc, fp=fp, ff=ff)
                 employee.save()
 
             return render(request, 'employee_data.html', {'employee_data': Employee.objects.all()})
@@ -55,7 +56,7 @@ def upcoming_events(request):
     employee_data = Employee.objects.all()
 
     upcoming_birthdays, upcoming_work_anniversaries = calculate_upcoming_events(employee_data)
-    return render(request, 'upcoming-events.html', {'upcoming_birthdays': upcoming_birthdays, 'upcoming_work_anniversaries': upcoming_work_anniversaries})
+    return render(request, 'upcoming-events.html', {'upcoming_birthdays': upcoming_birthdays, 'upcoming_work_anniversaries': upcoming_work_anniversaries, 'eData':employee_data})
 
 def login_view(request):
     if request.method == 'POST':
@@ -86,7 +87,6 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')  # Redirect to the login page after logout
-
 
 
 def edit_employee(request, eId):

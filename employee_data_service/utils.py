@@ -22,7 +22,10 @@ def calculate_upcoming_events(employee_data):
                 'name': employee.name,
                 'dob': dob,
                 'email': employee.email,
-                'days_remaining': 0
+                'days_remaining': 0,
+                "fc":employee.fc,
+                "fp":employee.fp,
+                "ff":employee.ff
             })
 
         if 0 <= remaining_days <= 30:
@@ -30,7 +33,10 @@ def calculate_upcoming_events(employee_data):
                 'name': employee.name,
                 'dob': dob,
                 'email': employee.email,
-                'days_remaining': remaining_days
+                'days_remaining': remaining_days,
+                "fc":employee.fc,
+                "fp":employee.fp,
+                "ff":employee.ff
             })
 
         # Calculate days remaining for the upcoming work anniversary
@@ -51,7 +57,10 @@ def calculate_upcoming_events(employee_data):
                 'doj': doj,
                 'email': employee.email,
                 'days_remaining': 0,
-                "total_years":total_years
+                "total_years":total_years,
+                "fc":employee.fc,
+                "fp":employee.fp,
+                "ff":employee.ff
             })
 
 
@@ -61,7 +70,8 @@ def calculate_upcoming_events(employee_data):
                 'doj': doj,
                 'email': employee.email,
                 'days_remaining': remaining_days_anniversary,
-                "total_years":total_years
+                "total_years":total_years,
+                "ff":employee.ff
             })
 
     return upcoming_birthdays, upcoming_work_anniversaries
