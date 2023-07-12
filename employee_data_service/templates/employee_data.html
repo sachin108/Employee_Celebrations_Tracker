@@ -27,10 +27,11 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
+      border: 1px solid #ccc;
     }
 
     th, td {
-      padding: 15px;
+      padding: 10px;
       text-align: left;
       border-bottom: 1px solid #ccc;
     }
@@ -47,6 +48,25 @@
     tr:hover {
       background-color: #e0e0e0;
     }
+
+    .edit-button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .edit-button:hover {
+      background-color: #45a049;
+    }
+
+    .edit-cell {
+      white-space: nowrap;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -62,6 +82,7 @@
           <th>Email</th>
           <th>Favourite Color</th>
           <th>Dream Place</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -69,11 +90,14 @@
         <tr>
           <td>{{ employee.eId }}</td>
           <td>{{ employee.name }}</td>
-          <td>{{ employee.dob }}</td>
-          <td>{{ employee.doj }}</td>
-          <td>{{ employee.email }}</td>
+          <td>{{ employee.dob|date:"M. j, Y" }}</td>
+          <td>{{ employee.doj|date:"M. j, Y" }}</td>
+                    <td>{{ employee.email }}</td>
           <td>{{ employee.fc }}</td>
           <td>{{ employee.fp }}</td>
+          <td class="edit-cell">
+            <a class="edit-button" href="{% url 'edit_employee' eId=employee.eId %}">Edit</a>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

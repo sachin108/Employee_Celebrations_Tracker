@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import pandas as pd
-from datetime import date, timedelta
 from .models import Employee
 from .utils import calculate_upcoming_events
+from .forms import EmployeeForm
 
 date_format = "%m/%d/%Y"  # Assuming the date format in the Excel sheet is MM/DD/YYYY
 
@@ -86,4 +86,40 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')  # Redirect to the login page after logout
+
+
+
+def edit_employee(request, eId):
+    employee = get_object_or_404(Employee, eId=eId)
+
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+            return redirect('employee_data')  # Redirect to the employee data page after successful edit
+    else:
+        form = EmployeeForm(instance=employee)
+
+    return render(request, 'edit_employee.html', {'form': form, 'employee': employee})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
