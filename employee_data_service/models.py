@@ -8,7 +8,7 @@ class Employee(models.Model):
     email = models.EmailField()
     eId=models.BigIntegerField(primary_key=True,null=False)
     fc=models.CharField(max_length=15)
-    fp=models.CharField(max_length=50)
     ff=models.CharField(max_length=50)
+    dept=models.CharField(max_length=50, null=True)
     def __str__(self):
         return self.name

@@ -24,7 +24,6 @@ def calculate_upcoming_events(employee_data):
                 'email': employee.email,
                 'days_remaining': 0,
                 "fc":employee.fc,
-                "fp":employee.fp,
                 "ff":employee.ff
             })
 
@@ -35,7 +34,6 @@ def calculate_upcoming_events(employee_data):
                 'email': employee.email,
                 'days_remaining': remaining_days,
                 "fc":employee.fc,
-                "fp":employee.fp,
                 "ff":employee.ff
             })
 
@@ -59,7 +57,6 @@ def calculate_upcoming_events(employee_data):
                 'days_remaining': 0,
                 "total_years":total_years,
                 "fc":employee.fc,
-                "fp":employee.fp,
                 "ff":employee.ff
             })
 

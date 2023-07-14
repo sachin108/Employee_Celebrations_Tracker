@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from employee_data_service.views import upload_file, show_employee_data, upcoming_events, login_view, signup_view, logout_view, edit_employee
+from employee_data_service.views import upload_file, show_employee_data, upcoming_events, login_view, signup_view, logout_view, edit_employee, search_employees
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,6 +11,7 @@ urlpatterns = [
     path('signup/', signup_view, name='signup'),
     path('logout/', logout_view, name='logout'),
     path('edit/<int:eId>/', edit_employee, name='edit_employee'),
+    path('search/', search_employees, name='search_employees')
 ]
 
 

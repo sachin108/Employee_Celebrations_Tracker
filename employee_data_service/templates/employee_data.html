@@ -9,7 +9,7 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 1200px; /* Adjusted the max-width */
       margin: 0 auto;
       padding: 20px;
       background-color: #fff;
@@ -67,11 +67,38 @@
       white-space: nowrap;
       text-align: center;
     }
+    form {
+            margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        width: 300px;
+    }
+
+    button[type="submit"] {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Employee Data</h1>
+    <form action="{% url 'search_employees' %}" method="GET">
+      <input type="text" name="q" placeholder="Search by name or department">
+      <button type="submit">Search</button>
+    </form>    
     <table>
       <thead>
         <tr>
@@ -81,7 +108,7 @@
           <th>Date of Joining</th>
           <th>Email</th>
           <th>Favourite Color</th>
-          <th>Dream Place</th>
+          <th>Department</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -94,7 +121,7 @@
           <td>{{ employee.doj|date:"M. j, Y" }}</td>
           <td>{{ employee.email }}</td>
           <td>{{ employee.fc }}</td>
-          <td>{{ employee.fp }}</td>
+          <td>{{ employee.dept }}</td>
           <td class="edit-cell">
             <a class="edit-button" href="{% url 'edit_employee' eId=employee.eId %}">Edit</a>
           </td>
