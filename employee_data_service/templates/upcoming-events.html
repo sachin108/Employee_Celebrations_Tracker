@@ -165,8 +165,6 @@
                 background: linear-gradient(to right, #6dd5ed, #2193b0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             }
     
-            /* Updated styles for larger cards and hover effect */
-    
             .event-container {
                 display: flex;
                 justify-content: center;
@@ -207,24 +205,63 @@
                 font-size: 18px;
             }
 
-            .logout-container {
+        .logout-container {
             position: fixed;
             top: 10px; /* Adjust the top position as needed */
             right: 10px; /* Adjust the right position as needed */
             z-index: 999; /* Ensure the logout link appears above other elements */
         }
+        .filter-form {
+            margin-bottom: 20px;
+            color: #000000;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
         
-        </style>
+        .filter-form label {
+            font-weight: bold;
+        }
+        
+        .filter-form input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .filter-form button {
+            padding: 5px 10px;
+            margin-left: 10px;
+            background-color: #337ab7;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            border-radius: 4px;
+        }        
+        
+
+    </style>
     </head>
     <body>
+        <form class="filter-form" method="get" action="{% url 'upcoming_events'%}">
+            <label for="dept">Filter by Department:</label> <br>
+            <input type="checkbox" name="dept" value="IT"> IT
+            <input type="checkbox" name="dept" value="HR"> HR
+            <input type="checkbox" name="dept" value="Operations"> Operations
+            <input type="checkbox" name="dept" value="Finance"> Finance
+            <input type="checkbox" name="dept" value="Marketing"> Marketing
+            <button type="submit">Apply Filters</button>
+        </form>    
+
         <h2>Upcoming Birthdays</h2>
-        <div class="logout-container">
-            <a class="logout-link " href="{% url 'logout' %}">Logout</a>
-        </div>
+            <div class="logout-container">
+                <a class="logout-link " href="{% url 'logout' %}">Logout</a>
+            </div>
+
         <div class="event-container">
-            {% if upcoming_birthdays %}
+            {% if  upcoming_events.upcoming_birthdays %}
                 <ul>
-                    {% for birthday in upcoming_birthdays %}
+                    {% for birthday in upcoming_events.upcoming_birthdays %}
                         <li {% if birthday.days_remaining == 0 %}class="special-effect"{% endif %}>
                             <div class="event-card birthday-card">
                                 <h3 class="event-card__title">{{ birthday.name }}</h3>
@@ -243,9 +280,9 @@
     
         <h2>Upcoming Work Anniversaries</h2>
         <div class="event-container" >
-            {% if upcoming_work_anniversaries %}
+            {% if upcoming_events.upcoming_work_anniversaries %}
                 <ul>
-                    {% for anniversary in upcoming_work_anniversaries %}
+                    {% for anniversary in upcoming_events.upcoming_work_anniversaries %}
                         <li {% if anniversary.days_remaining == 0 %}class="special-effect"{% endif %}>
                             <div class="event-card anniversary-card">
                                 <h3 class="event-card__title">{{ anniversary.name }}</h3>

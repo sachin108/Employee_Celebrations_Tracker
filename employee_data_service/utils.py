@@ -1,10 +1,13 @@
 from datetime import datetime, timedelta
 
-def calculate_upcoming_events(employee_data):
+def calculate_upcoming_events(employee_data, dept=None):
     upcoming_birthdays = []
     upcoming_work_anniversaries = []
 
     today = datetime.today()
+
+    if dept:
+        employee_data = employee_data.filter(dept__in=dept)
 
     for employee in employee_data:
         # Calculate days remaining for the upcoming birthday
@@ -71,4 +74,7 @@ def calculate_upcoming_events(employee_data):
                 "ff":employee.ff
             })
 
-    return upcoming_birthdays, upcoming_work_anniversaries
+    return {
+        'upcoming_birthdays': upcoming_birthdays,
+        'upcoming_work_anniversaries': upcoming_work_anniversaries
+    }

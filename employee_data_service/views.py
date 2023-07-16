@@ -67,11 +67,10 @@ def search_employees(request):
 
 @login_required(login_url='login')
 def upcoming_events(request):
-    # Retrieve the employee data from the database
-    employee_data = Employee.objects.all()
-
-    upcoming_birthdays, upcoming_work_anniversaries = calculate_upcoming_events(employee_data)
-    return render(request, 'upcoming-events.html', {'upcoming_birthdays': upcoming_birthdays, 'upcoming_work_anniversaries': upcoming_work_anniversaries, 'eData':employee_data})
+    depts = request.GET.getlist('dept')  # Get the selected departments from the request
+    employee_data = Employee.objects.all()  # Retrieve the employee data
+    upcoming_events = calculate_upcoming_events(employee_data, depts)
+    return render(request, 'upcoming-events.html',  {'employee_data': employee_data, 'upcoming_events': upcoming_events})
 
 
 def login_view(request):
