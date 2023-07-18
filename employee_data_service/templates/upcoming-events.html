@@ -42,6 +42,7 @@
                 list-style-type: none;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
+
     
             .special-effect {
                 animation: pulseEffect 2s infinite;
@@ -203,6 +204,8 @@
                 font-family: 'Raleway', sans-serif;
                 font-weight: 500;
                 font-size: 18px;
+                display: inline-block;
+                margin-right: 10px; 
             }
 
         .logout-container {
@@ -238,8 +241,6 @@
             display: inline-block;
             border-radius: 4px;
         }        
-        
-
     </style>
     </head>
     <body>
@@ -283,14 +284,14 @@
             {% if upcoming_events.upcoming_work_anniversaries %}
                 <ul>
                     {% for anniversary in upcoming_events.upcoming_work_anniversaries %}
-                        <li {% if anniversary.days_remaining == 0 %}class="special-effect"{% endif %}>
+                        <li {% if anniversary.days_remaining == 0 %} class="special-effect"{% endif %} style="margin-right: 80px; margin-left: 80px;">
                             <div class="event-card anniversary-card">
                                 <h3 class="event-card__title">{{ anniversary.name }}</h3>
                                 <span class="event-card__icon">🎉</span>
                                 <p class="event-card__description">Email: {{ anniversary.email }}</p>
                                 <p class="event-card__extra-info">Joining Date: {{ anniversary.doj }}</p>
                                 <p class="event-card__extra-info"><span class="smiley-icon">Days Remaining: {{ anniversary.days_remaining }}</span> 😀</p>
-                                <p class="event-card__extra-info">{% if anniversary.total_years == 1 %}{{anniversary.name}} has completed {{anniversary.total_years}} year in our organization.{% else %}{{anniversary.name}} has completed {{anniversary.total_years}} years in our organization.{% endif %}</p>
+                                <p class="event-card__extra-info">{% if anniversary.total_years == 1 %}{{anniversary.name}} has completed {{anniversary.total_years}} year in TechM.{% else %}{{anniversary.name}} has completed {{anniversary.total_years}} years in TechM.{% endif %}</p>
                                 <p class="event-card__extra-info"><span class="food">{{anniversary.ff}} is {{anniversary.name}}'s favourite food.</span></p>
                             </div>
                         </li>
