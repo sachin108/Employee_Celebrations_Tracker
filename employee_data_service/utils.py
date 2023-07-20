@@ -71,7 +71,8 @@ def calculate_upcoming_events(employee_data, dept=None):
                 'email': employee.email,
                 'days_remaining': remaining_days_anniversary,
                 "total_years":total_years,
-                "ff":employee.ff
+                "ff":employee.ff,
+                "fc":employee.fc
             })
 
     return {

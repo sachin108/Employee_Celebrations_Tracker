@@ -240,8 +240,12 @@
             cursor: pointer;
             display: inline-block;
             border-radius: 4px;
-        }        
+        }  
+        #xyz{
+            margin-right: 80px; margin-left: 80px;
+        }      
     </style>
+
     </head>
     <body>
         <form class="filter-form" method="get" action="{% url 'upcoming_events'%}">
@@ -250,7 +254,7 @@
             <input type="checkbox" name="dept" value="HR"> HR
             <input type="checkbox" name="dept" value="Operations"> Operations
             <input type="checkbox" name="dept" value="Finance"> Finance
-            <input type="checkbox" name="dept" value="Marketing"> Marketing
+            <input type="checkbox" name="dept" value="Marketing"> Marketing 
             <button type="submit">Apply Filters</button>
         </form>    
 
@@ -263,7 +267,14 @@
             {% if  upcoming_events.upcoming_birthdays %}
                 <ul>
                     {% for birthday in upcoming_events.upcoming_birthdays %}
-                        <li {% if birthday.days_remaining == 0 %}class="special-effect"{% endif %}>
+                    <li  {% if birthday.days_remaining == 0 %}class="special-effect"{% endif %}
+                        {% if birthday.fc == 'Yellow' %}style="background: yellow;"{% endif %}
+                        {% if birthday.fc == 'Red' %}style="background: red;"{% endif %}
+                        {% if birthday.fc == 'Blue' %}style="background: blue;"{% endif %}
+                        {% if birthday.fc == 'Blue' %}style="background: blue;"{% endif %}
+                        {% if birthday.fc == 'Green' %}style="background: green;"{% endif %}
+                        {% if birthday.fc == 'Purple' %}style="background: purple;"{% endif %} 
+                    >
                             <div class="event-card birthday-card">
                                 <h3 class="event-card__title">{{ birthday.name }}</h3>
                                 <span class="event-card__icon">🎂</span>
@@ -284,7 +295,14 @@
             {% if upcoming_events.upcoming_work_anniversaries %}
                 <ul>
                     {% for anniversary in upcoming_events.upcoming_work_anniversaries %}
-                        <li {% if anniversary.days_remaining == 0 %} class="special-effect"{% endif %} style="margin-right: 80px; margin-left: 80px;">
+                        <li id="xyz" {% if anniversary.days_remaining == 0 %} class="special-effect"{% endif %} 
+                            {% if anniversary.fc == 'Yellow' %}style="background: yellow;"{% endif %}
+                            {% if anniversary.fc == 'Red' %}style="background: red;"{% endif %}
+                            {% if anniversary.fc == 'Blue' %}style="background: blue;"{% endif %}
+                            {% if anniversary.fc == 'Blue' %}style="background: blue;"{% endif %}
+                            {% if anniversary.fc == 'Green' %}style="background: green;"{% endif %}
+                            {% if anniversary.fc == 'Purple' %}style="background: purple;"{% endif %}
+                        >
                             <div class="event-card anniversary-card">
                                 <h3 class="event-card__title">{{ anniversary.name }}</h3>
                                 <span class="event-card__icon">🎉</span>

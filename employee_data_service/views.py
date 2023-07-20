@@ -9,20 +9,17 @@ from .forms import EmployeeForm
 from django.db.models import Q
 
 
-date_format="%Y-%m-%d"  # Assuming the date format in the Excel sheet is MM/DD/YYYY
+date_format="%Y-%m-%d"  
 
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser)
 def upload_file(request):
     if request.method == 'POST':
-        file = request.FILES['file']  # Assuming the file input field has the name 'file'
-
-        # Check if the uploaded file is an Excel file
+        file = request.FILES['file']
+        
         if file.name.endswith('.xls') or file.name.endswith('.xlsx'):
-            # Read the Excel file using pandas
             df = pd.read_excel(file)
 
-            # Extract data from the Excel sheet
             for _, row in df.iterrows():
                 eId=row['Employee_ID']
                 name = row['Employee Name']
@@ -35,7 +32,6 @@ def upload_file(request):
                 ff=row['favourite food']
                 dept=row['Department']
 
-                # Create Employee objects or perform any desired operations with the extracted data
                 employee = Employee(eId=eId, name=name, dob=dob, doj=doj, email=email,fc=fc, ff=ff, dept=dept)
                 employee.save()
 
@@ -58,8 +54,7 @@ def search_employees(request):
     query = request.GET.get('q')
     if query:
         employees = Employee.objects.filter(
-            Q(name__icontains=query) | Q(dept__icontains=query)  # Add more fields to search if desired
-        )
+            Q(name__icontains=query) | Q(dept__icontains=query))
     else:
         employees = Employee.objects.all()
     
@@ -67,8 +62,8 @@ def search_employees(request):
 
 @login_required(login_url='login')
 def upcoming_events(request):
-    depts = request.GET.getlist('dept')  # Get the selected departments from the request
-    employee_data = Employee.objects.all()  # Retrieve the employee data
+    depts = request.GET.getlist('dept')  
+    employee_data = Employee.objects.all() 
     upcoming_events = calculate_upcoming_events(employee_data, depts)
     return render(request, 'upcoming-events.html',  {'employee_data': employee_data, 'upcoming_events': upcoming_events})
 
@@ -97,14 +92,13 @@ def signup_view(request):
             return render(request, 'signup.html', {'error_message': error_message})
         else:        
             user = User.objects.create_user(username=username, email=email, password=password)
-        # Optionally, you can add additional fields to the User model or perform any other desired operations
-        return redirect('login')  # Redirect to the login page after successful signup
+        return redirect('login') 
     else:
         return render(request, 'signup.html')
 
 def logout_view(request):
     logout(request)
-    return redirect('login')  # Redirect to the login page after logout
+    return redirect('login') 
 
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser)
@@ -115,7 +109,7 @@ def edit_employee(request, eId):
         form = EmployeeForm(request.POST, instance=employee)
         if form.is_valid():
             form.save()
-            return redirect('employee_data')  # Redirect to the employee data page after successful edit
+            return redirect('employee_data') 
     else:
         form = EmployeeForm(instance=employee)
 
