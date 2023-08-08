@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'employee_data_service',
-    'storages'
+    'storages',
+   'elasticapm.contrib.django'
 ]
 
 MIDDLEWARE = [
@@ -63,6 +64,7 @@ ELASTIC_APM = {
   'SERVER_URL': 'https://70b3b12f4f344b5599deee109317548b.apm.us-central1.gcp.cloud.es.io:443',
 
   'ENVIRONMENT': 'my-environment',
+    'DEBUG': True,
 }
 
 
@@ -83,6 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'elasticapm.contrib.django.context_processors.rum_tracing',            
             ],
         },
     },
@@ -162,3 +165,41 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'  # Update with your login URL pattern name
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'elasticapm': {
+            'level': 'DEBUG',  # Change to your desired level (e.g., 'WARNING')
+            'class': 'elasticapm.contrib.django.handlers.LoggingHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'mysite': {
+            'level': 'DEBUG',  # Change to your desired level (e.g., 'WARNING')
+            'handlers': ['elasticapm'],
+            'propagate': False,
+        },
+        'elasticapm.errors': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+    },
+}
