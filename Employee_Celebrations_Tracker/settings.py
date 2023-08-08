@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "elasticapm.contrib.django.middleware.TracingMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +54,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+ELASTIC_APM = {
+  'SERVICE_NAME': 'Django App',
+
+  'SECRET_TOKEN': 'ktTXfZl26tM4KSacoH',
+
+  'SERVER_URL': 'https://70b3b12f4f344b5599deee109317548b.apm.us-central1.gcp.cloud.es.io:443',
+
+  'ENVIRONMENT': 'my-environment',
+}
+
+
 
 SESSION_COOKIE_AGE = 86400  # 24 hours (in seconds)
 
@@ -120,6 +133,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+ELASTIC_APM["INSTRUMENT_DJANGO_MANAGEMENT_COMMANDS"] = True
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -145,9 +160,5 @@ STATICFILES_DIRS = [
 ]
 
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 LOGIN_URL = 'login'  # Update with your login URL pattern name

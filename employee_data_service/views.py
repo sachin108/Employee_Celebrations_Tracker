@@ -7,6 +7,7 @@ from .models import Employee
 from .utils import calculate_upcoming_events
 from .forms import EmployeeForm
 from django.db.models import Q
+from elasticapm import capture_span
 
 
 date_format="%Y-%m-%d"  
@@ -42,6 +43,7 @@ def upload_file(request):
         return render(request, 'upload.html')
 
 
+@capture_span("my_custom_transaction", "custom")
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser)
 def show_employee_data(request):
@@ -60,6 +62,7 @@ def search_employees(request):
     
     return render(request, 'employee_search.html', {'employees': employees, 'query': query})
 
+@capture_span("my_custom_transactio", "custo")
 @login_required(login_url='login')
 def upcoming_events(request):
     depts = request.GET.getlist('dept')  
@@ -79,6 +82,8 @@ def login_view(request):
                 return render(request, 'adminX.html')
             else:
                 return redirect('upcoming_events') 
+        else:
+            return render(request, 'login.html', {'error_message': 'User does not exist!'})
     else:
         return render(request, 'login.html')
 

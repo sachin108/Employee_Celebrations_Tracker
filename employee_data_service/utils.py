@@ -51,7 +51,6 @@ def calculate_upcoming_events(employee_data, dept=None):
         total_years=(today.year - doj.year)
         remaining_days_anniversary = (next_anniversary - today).days
 
-        print(employee.name, remaining_days_anniversary)
         if remaining_days_anniversary == 365:
             upcoming_work_anniversaries.append({
                 'name': employee.name,
