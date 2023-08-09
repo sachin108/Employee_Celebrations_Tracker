@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'Employee_Celebrations_Tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # or 'django.db.backends.mysql' for MySQL
-        'NAME': 'spring',
+        'NAME': 'djangoDB',
         'USER': 'admin',
         'PASSWORD': 'pns2F9xUCcB6Fbe',
         'HOST': 'database-1.cm0rqlp66vfh.us-west-2.rds.amazonaws.com',
