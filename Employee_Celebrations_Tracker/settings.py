@@ -25,14 +25,9 @@ SECRET_KEY = 'django-insecure-9p!7py0)n!phwdh&00vhci*)8q)%bc7@q=y+nmue1z7m2g%=l5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# settings.py
-
-# ...
 ALLOWED_HOSTS = ['*']
-# ...
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -56,6 +51,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# configuration for integrating Elastic Application Performance 
+# Monitoring (APM) with a Django web application
 ELASTIC_APM = {
   'SERVICE_NAME': 'Django App',
 
@@ -64,13 +61,9 @@ ELASTIC_APM = {
   'SERVER_URL': 'https://70b3b12f4f344b5599deee109317548b.apm.us-central1.gcp.cloud.es.io:443',
 
   'ENVIRONMENT': 'my-environment',
-    'DEBUG': True,
+
+  'DEBUG': True,
 }
-
-
-
-SESSION_COOKIE_AGE = 86400  # 24 hours (in seconds)
-
 
 ROOT_URLCONF = 'Employee_Celebrations_Tracker.urls'
 
@@ -91,13 +84,12 @@ TEMPLATES = [
     },
 ]
 
+# specifies the entry point for the WSGI (Web Server Gateway Interface) 
+# application of your Django project.
 WSGI_APPLICATION = 'Employee_Celebrations_Tracker.wsgi.application'
 
 
 '''
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # or 'django.db.backends.mysql' for MySQL
@@ -108,18 +100,14 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
 '''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -136,7 +124,47 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#when you run Django management commands, Elastic APM will also capture performance data 
+#and other relevant metrics for those commands
 ELASTIC_APM["INSTRUMENT_DJANGO_MANAGEMENT_COMMANDS"] = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'elasticapm': {
+            'level': 'DEBUG',  # Change to your desired level (e.g., 'WARNING')
+            'class': 'elasticapm.contrib.django.handlers.LoggingHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'ERROR',
+            'handlers': ['elasticapm'],
+            'propagate': False,
+        },
+        'mysite': {
+            'level': 'DEBUG',  # Change to your desired level (e.g., 'WARNING')
+            'handlers': ['elasticapm'],
+            'propagate': False,
+        },
+        'elasticapm.errors': {
+            'level': 'ERROR',
+            'handlers': ['elasticapm'],
+            'propagate': False,
+        },
+    },
+}
 
 
 # Internationalization
@@ -166,40 +194,3 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'  # Update with your login URL pattern name
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-    },
-    'handlers': {
-        'elasticapm': {
-            'level': 'DEBUG',  # Change to your desired level (e.g., 'WARNING')
-            'class': 'elasticapm.contrib.django.handlers.LoggingHandler',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'mysite': {
-            'level': 'DEBUG',  # Change to your desired level (e.g., 'WARNING')
-            'handlers': ['elasticapm'],
-            'propagate': False,
-        },
-        'elasticapm.errors': {
-            'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-    },
-}
