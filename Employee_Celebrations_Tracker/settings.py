@@ -89,14 +89,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Employee_Celebrations_Tracker.wsgi.application'
 
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # or 'django.db.backends.mysql' for MySQL
         'NAME': 'spring',
         'USER': 'admin',
-        'PASSWORD': 'ndT2Wr5tNqsvjtb',
-        'HOST': 'spring.cm0rqlp66vfh.us-west-2.rds.amazonaws.com',
+        'PASSWORD': 'pns2F9xUCcB6Fbe',
+        'HOST': 'database-1.cm0rqlp66vfh.us-west-2.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
@@ -108,6 +108,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
 
 AUTH_PASSWORD_VALIDATORS = [
     {
