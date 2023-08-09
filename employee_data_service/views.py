@@ -2,12 +2,13 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-import pandas as pd
+from django.http import HttpResponse
 from .models import Employee
 from .utils import calculate_upcoming_events
 from .forms import EmployeeForm
 from django.db.models import Q
 from elasticapm import capture_span
+import pandas as pd
 import logging
 
 logger = logging.getLogger('mysite')
@@ -45,11 +46,9 @@ def upload_file(request):
             return render(request, 'upload.html')
 
     except Exception as e:
-        if 'threading._bootstrap' not in str(e):  # Check if the exception is the threading._bootstrap error
-            logger.error(f"Error during file upload: {str(e)}", exc_info=True)
-            # Handle the error gracefully, such as showing an error page or redirecting back to upload form
-            return render(request, 'upload.html', {'error_message': 'An error occurred during file upload.'})
-        # If it's the threading._bootstrap error, ignore it and don't capture it in Elastic APM
+        logger.error(f"Error during file upload: {str(e)}", exc_info=True)
+        # Handle the error gracefully, such as showing an error page or redirecting back to upload form
+        return render(request, 'upload.html', {'error_message': 'An error occurred during file upload.'})
 
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser)
