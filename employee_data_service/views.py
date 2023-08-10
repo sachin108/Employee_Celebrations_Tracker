@@ -95,7 +95,7 @@ def upcoming_events(request):
         upcoming_events = calculate_upcoming_events(employee_data, depts)
 
         # Log the number of upcoming events and the number of employees considered
-        logger.info(f"Upcoming events calculated for {len(employee_data)} employees. Count of upcoming events: {len(upcoming_events)}")
+        logger.info(f"Upcoming events calculated for {len(employee_data)} employees. Count of upcoming events: {len(employee_data)} employees. Count of upcoming events: {len(upcoming_events['upcoming_work_anniversaries'])+len(upcoming_events['upcoming_birthdays'])}")
 
         return render(request, 'upcoming-events.html', {'employee_data': employee_data, 'upcoming_events': upcoming_events})
 
