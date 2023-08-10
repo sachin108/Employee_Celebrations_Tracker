@@ -5,21 +5,19 @@ FROM python:3.9
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+# Install dependencies
+RUN pip install --upgrade pip
+COPY requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
-# Run the collectstatic command
-RUN python manage.py collectstatic --noinput
+# Copy Django code
+COPY . /app
 
-# Run the migrations
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+# Set working directory
+WORKDIR /app
 
-# Make port 80 available to the world outside this container
+# Expose necessary ports
 EXPOSE 8000
 
-# Define environment variable(s) if needed
-ENV DJANGO_SETTINGS_MODULE=myapp.settings
-
-# Define the command to run your application
+# Run the Django application
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
