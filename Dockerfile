@@ -21,3 +21,6 @@ EXPOSE 8000
 
 # Run the Django application
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+
+QDSKJDhug7P6qEv
